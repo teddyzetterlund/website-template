@@ -1,0 +1,9 @@
+{
+  "main": "gulpfile.js",
+  "scripts": {
+    "start": "gulp"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.7"
+  }
+}
