@@ -1,9 +1,11 @@
 {
   "main": "gulpfile.js",
   "scripts": {
-    "start": "gulp"
+    "start": "gulp",
+    "test": "bas -c -s acceptance-tests.bas http://localhost:4000"
   },
   "devDependencies": {
+    "bas": "0.0.32",
     "gulp": "^3.8.7"
   }
 }

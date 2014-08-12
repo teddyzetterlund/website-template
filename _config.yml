@@ -1,4 +1,5 @@
 name: Website Template
 description: A starting point for building static websites.
 exclude: [README.md, Gemfile, Gemfile.lock, .bundle, vendor/bundle,
-          gulpfile.js, node_modules, package.json, LICENSE]
+          gulpfile.js, node_modules, package.json, LICENSE,
+          acceptance-tests.bas]
