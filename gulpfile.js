@@ -1,11 +1,26 @@
-var gulp  = require('gulp');
-var spawn = require('child_process').spawn;
+var gulp        = require('gulp');
+var spawn       = require('child_process').spawn;
+var browserSync = require('browser-sync');
 
-gulp.task('jekyll', function() {
-  spawn('jekyll', ['build'], {stdio: 'inherit'});
+gulp.task('jekyll-build', function(done) {
+  spawn('jekyll', ['build'], {stdio: 'inherit'})
+    .on('close', done);
 });
 
-gulp.task('default', ['jekyll'], function() {
-  spawn('jekyll', ['serve'], {stdio: 'inherit'});
-  gulp.watch(['**/*.html', '!_site/**/*'], ['jekyll']);
+gulp.task('start-server', ['jekyll-build'], function() {
+  browserSync({
+    server: {
+      baseDir: '_site'
+    }
+  });
 });
+
+gulp.task('reload-server', ['jekyll-build'], function() {
+  browserSync.reload();
+});
+
+gulp.task('watch', function() {
+  gulp.watch(['**/*.html', '!_site/**/*'], ['reload-server']);
+});
+
+gulp.task('default', ['start-server', 'watch']);
