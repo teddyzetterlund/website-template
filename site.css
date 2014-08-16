@@ -1,0 +1,13 @@
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  background: #FFF;
+  color: #333;
+  font: 1em/1.5 sans-serif;
+}
