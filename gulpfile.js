@@ -19,8 +19,9 @@ gulp.task('reload-server', ['jekyll-build'], function() {
   browserSync.reload();
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', ['jekyll-build'], function() {
   gulp.watch(['**/*.html', '!_site/**/*'], ['reload-server']);
 });
+
 
 gulp.task('default', ['start-server', 'watch']);
