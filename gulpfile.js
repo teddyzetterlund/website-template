@@ -1,7 +1,12 @@
 var gulp        = require('gulp');
+var del         = require('del');
 var spawn       = require('child_process').spawn;
 var browserSync = require('browser-sync');
 var prefix      = require('gulp-autoprefixer');
+
+gulp.task('clean', function(done) {
+  del(['_site'], done);
+});
 
 gulp.task('jekyll-build', function(done) {
   spawn('jekyll', ['build'], {stdio: 'inherit'})
