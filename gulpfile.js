@@ -5,7 +5,7 @@ var browserSync = require('browser-sync');
 var prefix      = require('gulp-autoprefixer');
 
 gulp.task('clean', function(done) {
-  del(['_site'], done);
+  del(['./_site/', './site.css'], done);
 });
 
 gulp.task('jekyll-build', function(done) {
@@ -13,7 +13,11 @@ gulp.task('jekyll-build', function(done) {
     .on('close', done);
 });
 
-gulp.task('start-server', ['jekyll-build'], function() {
+gulp.task('jekyll-rebuild', ['jekyll-build'], function() {
+  browserSync.reload();
+});
+
+gulp.task('browser-sync', ['styles', 'jekyll-build'], function() {
   browserSync({
     server: {
       baseDir: '_site'
@@ -21,23 +25,18 @@ gulp.task('start-server', ['jekyll-build'], function() {
   });
 });
 
-gulp.task('reload-server', ['jekyll-build'], function() {
-  browserSync.reload();
-});
-
 gulp.task('styles', function() {
-  gulp.src('site.css')
+  gulp.src('./_styles/site.css')
     .pipe(prefix())
-    .pipe(gulp.dest('_site/'))
-    .pipe(browserSync.reload({stream: true}));
+    .pipe(gulp.dest('./_site/'))
+    .pipe(browserSync.reload({stream: true}))
+    .pipe(gulp.dest('./')); // So we won't loose it on `jekyll-rebuild`.
 });
 
-gulp.task('watch', ['jekyll-build'], function() {
-  gulp.watch(['**/*.html', '!_site/**/*'], ['reload-server', 'styles']);
-  gulp.watch('site.css', ['styles']);
+gulp.task('watch', function() {
+  gulp.watch(['_layouts.html', 'index.html', '!_site/**/*'], ['jekyll-rebuild']);
 });
 
-
-gulp.task('build', ['clean', 'jekyll-build', 'styles']);
-gulp.task('server', ['start-server', 'watch']);
-gulp.task('default', ['build']);
+gulp.task('build', ['styles', 'jekyll-build']);
+gulp.task('server', ['browser-sync', 'watch']);
+gulp.task('default', ['server']);
