@@ -38,4 +38,6 @@ gulp.task('watch', ['jekyll-build'], function() {
 });
 
 
-gulp.task('default', ['start-server', 'watch']);
+gulp.task('build', ['clean', 'jekyll-build', 'styles']);
+gulp.task('server', ['start-server', 'watch']);
+gulp.task('default', ['build']);
