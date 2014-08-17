@@ -2,3 +2,5 @@
 _site
 node_modules
 vendor/bundle
+rev-manifest.json
+*.css
